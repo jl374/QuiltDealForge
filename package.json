@@ -1,0 +1,11 @@
+{
+  "name": "dealforge",
+  "private": true,
+  "workspaces": ["apps/web"],
+  "scripts": {
+    "dev:web": "npm --workspace=apps/web run dev",
+    "build:web": "npm --workspace=apps/web run build",
+    "lint": "npm --workspace=apps/web run lint",
+    "typecheck": "npm --workspace=apps/web run typecheck"
+  }
+}

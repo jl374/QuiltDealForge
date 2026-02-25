@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js
+.next/
+out/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+.venv/
+venv/
+.pytest_cache/
+
+# Env files — NEVER commit secrets
+.env
+.env.local
+.env.*.local
+apps/web/.env.local
+apps/api/.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Docker volumes (if local override)
+postgres_data/
+
+# Alembic (keep versions, not cache)
+apps/api/alembic/__pycache__/
