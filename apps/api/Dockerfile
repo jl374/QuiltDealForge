@@ -17,4 +17,4 @@ ENV PORT=8000
 
 EXPOSE ${PORT}
 
-CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port ${PORT}"]
+CMD ["sh", "-c", "echo DATABASE_URL starts with: $(echo $DATABASE_URL | cut -c1-30)... && alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port ${PORT}"]
