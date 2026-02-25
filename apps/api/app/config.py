@@ -16,21 +16,26 @@ class Settings(BaseSettings):
     def allowed_origins_list(self) -> list[str]:
         return [o.strip() for o in self.ALLOWED_ORIGINS.split(",")]
 
-    model_config = {"env_file": ".env"}
+    model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 
     @classmethod
     def settings_customise_sources(cls, settings_cls, **kwargs):  # type: ignore[override]
-        """Give .env file priority over shell environment variables.
+        """Give .env file priority over shell environment variables locally.
 
         By default Pydantic Settings reads env vars first, then .env file.
         Claude Desktop exports an empty ANTHROPIC_API_KEY which shadows the
-        real key in our .env file. Reversing the order fixes this.
+        real key in our .env file. Reversing the order fixes this locally.
+        In production (no .env file), env vars work normally.
         """
+        import os
         init = kwargs.get("init_settings")
         env = kwargs.get("env_settings")
         dotenv = kwargs.get("dotenv_settings")
         file_secret = kwargs.get("file_secret_settings")
-        # .env file wins over shell env vars
+        # In production, prefer env vars (no .env file present)
+        if os.environ.get("ENVIRONMENT") == "production":
+            return (init, env, dotenv, file_secret)
+        # Locally, .env file wins over shell env vars
         return (init, dotenv, env, file_secret)
 
 
